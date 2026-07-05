@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, ArrowRight } from 'lucide-react';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Heart, ArrowRight } from "lucide-react";
 
 /**
  * Presents one cute question with two options.
@@ -8,7 +8,12 @@ import { Heart, ArrowRight } from 'lucide-react';
  * - For `shyOnNo` questions, the second (No) button playfully dodges/shakes
  *   a couple of times before it lets itself be clicked.
  */
-export default function QuestionCard({ question, onAnswered, isFinal }) {
+export default function QuestionCard({
+  question,
+  onAnswered,
+  onSelect,
+  isFinal,
+}) {
   const [answer, setAnswer] = useState(null);
   const [dodges, setDodges] = useState(0);
   const [shake, setShake] = useState(false);
@@ -22,6 +27,7 @@ export default function QuestionCard({ question, onAnswered, isFinal }) {
       return;
     }
     setAnswer(option);
+    onSelect?.(option, idx); // report the chosen answer upward
     if (isFinal) onAnswered(option, idx);
   };
 
@@ -64,13 +70,17 @@ export default function QuestionCard({ question, onAnswered, isFinal }) {
                   key={option.label}
                   type="button"
                   onClick={() => choose(option, idx)}
-                  className={isPrimary ? 'btn-premium' : 'btn-ghost'}
+                  className={isPrimary ? "btn-premium" : "btn-ghost"}
                   animate={{
                     x: off.x || 0,
                     y: off.y || 0,
                     rotate: shake && idx === 1 ? [0, -6, 6, -4, 4, 0] : 0,
                   }}
-                  transition={{ type: shake ? 'tween' : 'spring', duration: 0.5, stiffness: 200 }}
+                  transition={{
+                    type: shake ? "tween" : "spring",
+                    duration: 0.5,
+                    stiffness: 200,
+                  }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -85,7 +95,7 @@ export default function QuestionCard({ question, onAnswered, isFinal }) {
             className="mt-8 flex flex-col items-center"
             initial={{ opacity: 0, scale: 0.9, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 180, damping: 16 }}
+            transition={{ type: "spring", stiffness: 180, damping: 16 }}
           >
             <motion.div
               className="mb-4 text-blush-500"
@@ -111,7 +121,10 @@ export default function QuestionCard({ question, onAnswered, isFinal }) {
                   whileTap={{ scale: 0.96 }}
                 >
                   Next
-                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                  <ArrowRight
+                    size={18}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
                 </motion.button>
               </>
             )}

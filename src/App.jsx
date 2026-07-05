@@ -1,45 +1,107 @@
-import { lazy, Suspense, useCallback, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { FaHeart } from 'react-icons/fa';
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { FaHeart } from "react-icons/fa";
 
-import LoadingScreen from './components/LoadingScreen';
-import ParticleBackground from './components/ParticleBackground';
-import Butterflies from './components/Butterflies';
-import ScrollProgress from './components/ScrollProgress';
-import MusicToggle from './components/MusicToggle';
-import Confetti from './components/Confetti';
-import Hero from './components/Hero';
+import LoadingScreen from "./components/LoadingScreen";
+import ParticleBackground from "./components/ParticleBackground";
+import Butterflies from "./components/Butterflies";
+import ScrollProgress from "./components/ScrollProgress";
+import MusicToggle from "./components/MusicToggle";
+import Confetti from "./components/Confetti";
+import Hero from "./components/Hero";
 
-import useAudio from './hooks/useAudio';
-import useSmoothScrollTo from './hooks/useSmoothScrollTo';
+import useAudio from "./hooks/useAudio";
+import useSmoothScrollTo from "./hooks/useSmoothScrollTo";
+import { FORMSPREE_ENDPOINT } from "./config";
+import { sendAnswers } from "./utils/sendAnswers";
 
 // Lazy-load the heavier below-the-fold sections for performance.
-const LoveJourney = lazy(() => import('./components/LoveJourney'));
-const CuteQuestions = lazy(() => import('./components/CuteQuestions'));
-const FinalMessage = lazy(() => import('./components/FinalMessage'));
-const EndingAnimation = lazy(() => import('./components/EndingAnimation'));
+const LoveJourney = lazy(() => import("./components/LoveJourney"));
+const CuteQuestions = lazy(() => import("./components/CuteQuestions"));
+const FinalMessage = lazy(() => import("./components/FinalMessage"));
+const AnswersRecap = lazy(() => import("./components/AnswersRecap"));
+const EndingAnimation = lazy(() => import("./components/EndingAnimation"));
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [started, setStarted] = useState(false); // hero "Continue" pressed
   const [celebrated, setCelebrated] = useState(false); // final question answered
+  const [answers, setAnswers] = useState([]); // Muskan's chosen answers
+
+  // Store one answer per question (id-keyed), kept sorted by question order.
+  // Also mirrored to localStorage so a refresh never loses her replies.
+  const recordAnswer = useCallback((record) => {
+    setAnswers((prev) => {
+      const next = prev.filter((r) => r.id !== record.id);
+      next.push(record);
+      next.sort((a, b) => a.id - b.id);
+      try {
+        localStorage.setItem("muskan-answers", JSON.stringify(next));
+      } catch {
+        /* storage may be unavailable — ignore */
+      }
+      return next;
+    });
+  }, []);
+
+  // When the celebration begins, send the full set of answers to your inbox
+  // (once), if a Formspree endpoint is configured.
+  const sentRef = useRef(false);
+  useEffect(() => {
+    if (celebrated && !sentRef.current && answers.length) {
+      sentRef.current = true;
+      sendAnswers(FORMSPREE_ENDPOINT, answers);
+    }
+  }, [celebrated, answers]);
 
   const confettiRef = useRef(null);
   const scrollTo = useSmoothScrollTo();
-  const { isPlaying, available, toggle, swell } = useAudio('/music/soft-piano.mp3', 0.4);
+  const { isPlaying, available, toggle, swell } = useAudio(
+    "/music/soft-piano.mp3",
+    0.4,
+  );
+
+  // Waits (up to ~2s) for a lazy-loaded section to mount, then smooth-scrolls
+  // to it. Retries on each animation frame so it works no matter how long the
+  // dynamic import takes.
+  const scrollWhenReady = useCallback(
+    (id, options) => {
+      let attempts = 0;
+      const tryScroll = () => {
+        const el = document.getElementById(id);
+        if (el) {
+          // one extra frame so layout is settled before measuring
+          requestAnimationFrame(() => scrollTo(id, options));
+        } else if (attempts < 120) {
+          attempts += 1;
+          requestAnimationFrame(tryScroll);
+        }
+      };
+      requestAnimationFrame(tryScroll);
+    },
+    [scrollTo],
+  );
 
   const handleContinue = useCallback(() => {
     setStarted(true);
-    // wait for lazy sections to mount, then glide down
-    setTimeout(() => scrollTo('journey', { offset: 20, duration: 1.3 }), 250);
-  }, [scrollTo]);
+    // The journey section is lazy-loaded, so poll until it exists in the DOM
+    // before scrolling — a fixed delay isn't reliable across devices.
+    scrollWhenReady("journey", { offset: 20, duration: 1.3 });
+  }, [scrollWhenReady]);
 
   const handleFinalYes = useCallback(() => {
     setCelebrated(true);
     confettiRef.current?.celebrate();
     swell(); // gently raise the music
-    setTimeout(() => scrollTo('message', { offset: 20, duration: 1.4 }), 500);
-  }, [scrollTo, swell]);
+    scrollWhenReady("message", { offset: 20, duration: 1.4 });
+  }, [scrollWhenReady, swell]);
 
   return (
     <>
@@ -48,11 +110,17 @@ export default function App() {
       <Butterflies count={5} />
       <Confetti ref={confettiRef} />
       <ScrollProgress />
-      <MusicToggle isPlaying={isPlaying} available={available} onToggle={toggle} />
+      <MusicToggle
+        isPlaying={isPlaying}
+        available={available}
+        onToggle={toggle}
+      />
 
       {/* Loading screen */}
       <AnimatePresence>
-        {loading && <LoadingScreen key="loader" onDone={() => setLoading(false)} />}
+        {loading && (
+          <LoadingScreen key="loader" onDone={() => setLoading(false)} />
+        )}
       </AnimatePresence>
 
       {/* Main content */}
@@ -74,7 +142,10 @@ export default function App() {
                   transition={{ duration: 0.6 }}
                 >
                   <LoveJourney />
-                  <CuteQuestions onFinalYes={handleFinalYes} />
+                  <CuteQuestions
+                    onFinalYes={handleFinalYes}
+                    onRecordAnswer={recordAnswer}
+                  />
 
                   <AnimatePresence>
                     {celebrated && (
@@ -84,6 +155,7 @@ export default function App() {
                         transition={{ duration: 0.8 }}
                       >
                         <FinalMessage />
+                        <AnswersRecap answers={answers} />
                         <EndingAnimation />
                       </motion.div>
                     )}
@@ -116,7 +188,7 @@ function SectionFallback() {
       <motion.div
         className="h-10 w-10 rounded-full border-2 border-lavender-300 border-t-blush-500"
         animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
       />
     </div>
   );
