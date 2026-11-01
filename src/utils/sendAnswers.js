@@ -1,5 +1,5 @@
 /**
- * Sends Muskan's answers to your Formspree endpoint so they arrive in your
+ * Sends reemal's answers to your Formspree endpoint so they arrive in your
  * inbox automatically. No-op if no endpoint is configured. Never throws —
  * a failed send should never break the celebration.
  */
@@ -18,8 +18,8 @@ export async function sendAnswers(endpoint, answers) {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        _subject: "Muskan's birthday answers 💖",
-        from: "Muskan (birthday site)",
+        _subject: "reemal's birthday answers 💖",
+        from: "reemal (birthday site)",
         message,
       }),
     });

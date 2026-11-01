@@ -1,15 +1,15 @@
-import { motion } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
-import SectionWrapper from './SectionWrapper';
-import FloatingHearts from './FloatingHearts';
+import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
+import SectionWrapper from "./SectionWrapper";
+import FloatingHearts from "./FloatingHearts";
 
 const LINES = [
-  'Thank you for making my world brighter.',
-  'No matter where life takes us,',
-  'I genuinely wish you endless happiness,',
-  'countless smiles,',
-  'beautiful dreams,',
-  'and every success you deserve.',
+  "Thank you for making my world brighter.",
+  "No matter where life takes us,",
+  "I genuinely wish you endless happiness,",
+  "countless smiles,",
+  "beautiful dreams,",
+  "and every success you deserve.",
 ];
 
 const container = {
@@ -20,11 +20,11 @@ const container = {
 };
 
 const line = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
+  hidden: { opacity: 0, y: 24, filter: "blur(6px)" },
   show: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
+    filter: "blur(0px)",
     transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
   },
 };
@@ -32,7 +32,10 @@ const line = {
 /** The heartfelt closing message with a soft, staggered reveal. */
 export default function FinalMessage() {
   return (
-    <SectionWrapper id="message" className="mx-auto max-w-3xl px-5 py-24 text-center sm:py-32">
+    <SectionWrapper
+      id="message"
+      className="mx-auto max-w-3xl px-5 py-24 text-center sm:py-32"
+    >
       <FloatingHearts count={16} intense />
       <div className="pointer-events-none absolute inset-0 bg-glow-radial" />
 
@@ -46,7 +49,7 @@ export default function FinalMessage() {
         <motion.div
           className="mb-6 flex justify-center text-champagne-400"
           animate={{ rotate: [0, 12, -12, 0], scale: [1, 1.15, 1] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
           <Sparkles size={40} />
         </motion.div>
@@ -72,14 +75,14 @@ export default function FinalMessage() {
             variants={line}
             className="pt-6 font-script text-4xl text-blush-500 sm:text-5xl"
           >
-            Happy Birthday once again, Muskan.
+            Cutieee once again, reemal.
           </motion.p>
 
           <motion.p
             variants={line}
             className="pt-2 font-display text-lg text-plum/80 sm:text-xl"
           >
-            You'll always be someone truly special to me.{' '}
+            You'll always be someone truly special to me.{" "}
             <span aria-hidden="true">❤️</span>
           </motion.p>
         </motion.div>

@@ -1,9 +1,9 @@
 {
-  "name": "muskan-birthday",
+  "name": "reemal-birthday",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "A premium, cinematic birthday website for Muskan.",
+  "description": "A premium, cinematic birthday website for reemal.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

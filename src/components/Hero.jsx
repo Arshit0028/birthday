@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, Cake, Heart } from 'lucide-react';
-import useTypewriter from '../hooks/useTypewriter';
-import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion';
-import FloatingHearts from './FloatingHearts';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight, Cake, Heart } from "lucide-react";
+import useTypewriter from "../hooks/useTypewriter";
+import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
+import FloatingHearts from "./FloatingHearts";
 
 const INTRO_LINES = [
   "Today isn't just your birthday...",
@@ -44,18 +44,18 @@ export default function Hero({ onContinue }) {
         <motion.span
           className="mb-4 inline-flex items-center gap-2 rounded-full glass px-5 py-2 text-sm font-medium text-lavender-500"
           animate={reduced ? {} : { y: [0, -6, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
           <Cake size={16} /> A little surprise, just for you
         </motion.span>
 
         <h1 className="font-display text-4xl font-semibold leading-tight text-shadow-soft sm:text-6xl md:text-7xl lg:text-8xl">
           <span aria-hidden="true">🎂 </span>
-          <span className="text-gradient">Happy Birthday</span>
+          <span className="text-gradient">Cutieee</span>
           <br />
           <span className="font-script text-5xl text-blush-500 sm:text-7xl md:text-8xl lg:text-9xl">
-            Muskan
-          </span>{' '}
+            reemal
+          </span>{" "}
           <motion.span
             aria-hidden="true"
             className="inline-block text-blush-400"
@@ -122,13 +122,16 @@ export default function Hero({ onContinue }) {
             className="btn-premium group relative z-10 mt-10 text-base sm:text-lg"
             initial={{ opacity: 0, y: 24, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 16 }}
+            transition={{ type: "spring", stiffness: 200, damping: 16 }}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
           >
             <Heart size={18} fill="currentColor" />
             Continue
-            <ChevronRight size={18} className="transition-transform group-hover:translate-x-1" />
+            <ChevronRight
+              size={18}
+              className="transition-transform group-hover:translate-x-1"
+            />
           </motion.button>
         )}
       </AnimatePresence>

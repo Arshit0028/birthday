@@ -4,7 +4,7 @@ import { Copy, Check, MessageCircle, Mail } from "lucide-react";
 import SectionWrapper from "./SectionWrapper";
 
 /**
- * Shows every answer Muskan chose across the 10 questions.
+ * Shows every answer reemal chose across the 10 questions.
  * Since this is a static site (no server), it also offers one-tap Copy /
  * WhatsApp / Email so she can send her replies back to you. If a Formspree
  * endpoint is configured (see src/config.js) they're also emailed to you
@@ -17,7 +17,7 @@ export default function AnswersRecap({ answers = [] }) {
   const resolved = useMemo(() => {
     if (answers.length) return answers;
     try {
-      const saved = JSON.parse(localStorage.getItem("muskan-answers") || "[]");
+      const saved = JSON.parse(localStorage.getItem("reemal-answers") || "[]");
       return Array.isArray(saved) ? saved : [];
     } catch {
       return [];
@@ -26,7 +26,7 @@ export default function AnswersRecap({ answers = [] }) {
 
   const text = useMemo(
     () =>
-      "Muskan's answers 💖\n\n" +
+      "reemal's answers 💖\n\n" +
       resolved
         .map((a, i) => `${i + 1}. ${a.question}\n   → ${a.answer}`)
         .join("\n\n"),
@@ -56,7 +56,7 @@ export default function AnswersRecap({ answers = [] }) {
 
   const waHref = `https://wa.me/?text=${encodeURIComponent(text)}`;
   const mailHref = `mailto:?subject=${encodeURIComponent(
-    "Muskan's answers 💖",
+    "reemal's answers 💖",
   )}&body=${encodeURIComponent(text)}`;
 
   return (
@@ -68,7 +68,7 @@ export default function AnswersRecap({ answers = [] }) {
         <h2 className="font-display text-3xl font-semibold text-plum sm:text-4xl">
           What{" "}
           <span className="font-script text-gradient text-4xl sm:text-5xl">
-            Muskan
+            reemal
           </span>{" "}
           said
         </h2>

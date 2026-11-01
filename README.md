@@ -1,4 +1,4 @@
-# 🎂 Happy Birthday, Muskan 💖
+# 🎂 Cutieee, reemal 💖
 
 A premium, cinematic, emotionally engaging single-page birthday experience —
 built like a luxury Apple page dipped in a romantic fairytale. Soft pink,
@@ -25,6 +25,7 @@ npm run preview
 > Requires **Node.js 18+**.
 
 ### 🎵 Add background music (optional)
+
 Drop a `soft-piano.mp3` file into `public/music/`. See
 `public/music/README.txt` for royalty-free sources. The site works fine
 without it — the music button just shows as muted.
@@ -44,6 +45,7 @@ without it — the music button just shows as muted.
 - **Ending** — a glowing heart that assembles itself from particles + signature
 
 ### Extras
+
 Floating music toggle · scroll-progress bar · smooth GSAP scrolling ·
 parallax · lazy-loaded sections · full keyboard focus states ·
 `prefers-reduced-motion` respected throughout · mobile-first responsive.
@@ -60,7 +62,7 @@ react-icons · Canvas particle systems. **No external UI component libraries.**
 ## 📁 Folder structure
 
 ```
-muskan-birthday/
+reemal-birthday/
 ├── public/
 │   └── music/            # drop soft-piano.mp3 here
 ├── src/
@@ -107,6 +109,6 @@ muskan-birthday/
 - **Hero confession** — the text lives in `src/components/Hero.jsx`.
 - **Final message** — `src/components/FinalMessage.jsx`.
 - **Colours & fonts** — all tokens are in `tailwind.config.js`.
-- **Name** — search the project for `Muskan` to swap in any name.
+- **Name** — search the project for `reemal` to swap in any name.
 
 Made with love, smiles, and a little courage. ❤️

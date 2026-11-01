@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-//  WHERE MUSKAN'S ANSWERS ARE SENT
+//  WHERE reemal'S ANSWERS ARE SENT
 // ─────────────────────────────────────────────────────────────
 // A static site can't email you on its own, so we use Formspree (free).
 //

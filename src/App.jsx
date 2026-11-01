@@ -33,7 +33,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [started, setStarted] = useState(false); // hero "Continue" pressed
   const [celebrated, setCelebrated] = useState(false); // final question answered
-  const [answers, setAnswers] = useState([]); // Muskan's chosen answers
+  const [answers, setAnswers] = useState([]); // reemal's chosen answers
 
   // Store one answer per question (id-keyed), kept sorted by question order.
   // Also mirrored to localStorage so a refresh never loses her replies.
@@ -43,7 +43,7 @@ export default function App() {
       next.push(record);
       next.sort((a, b) => a.id - b.id);
       try {
-        localStorage.setItem("muskan-answers", JSON.stringify(next));
+        localStorage.setItem("reemal-answers", JSON.stringify(next));
       } catch {
         /* storage may be unavailable — ignore */
       }
@@ -174,7 +174,7 @@ export default function App() {
             >
               <FaHeart aria-hidden="true" />
             </motion.span>
-            for Muskan
+            for reemal
           </footer>
         </motion.main>
       )}
