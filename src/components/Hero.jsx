@@ -6,7 +6,7 @@ import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
 import FloatingHearts from "./FloatingHearts";
 
 const INTRO_LINES = [
-  "Today isn't just your birthday...",
+  "Today isn't just your YOU speacial...",
   "It's a celebration of one of the most beautiful souls I've ever known.",
 ];
 

@@ -18,8 +18,8 @@ export async function sendAnswers(endpoint, answers) {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        _subject: "reemal's birthday answers 💖",
-        from: "reemal (birthday site)",
+        _subject: "reemal's YOU speacial answers 💖",
+        from: "reemal (YOU speacial site)",
         message,
       }),
     });

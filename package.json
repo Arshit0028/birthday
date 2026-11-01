@@ -1,9 +1,9 @@
 {
-  "name": "reemal-birthday",
+  "name": "reemal-YOU speacial",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "A premium, cinematic birthday website for reemal.",
+  "description": "A premium, cinematic YOU speacial website for reemal.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

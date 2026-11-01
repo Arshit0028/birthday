@@ -1,6 +1,6 @@
 # 🎂 Cutieee, reemal 💖
 
-A premium, cinematic, emotionally engaging single-page birthday experience —
+A premium, cinematic, emotionally engaging single-page YOU speacial experience —
 built like a luxury Apple page dipped in a romantic fairytale. Soft pink,
 lavender, champagne gold and pastel purple, with floating hearts, sparkles,
 butterflies, glowing bokeh, drifting petals, glassmorphism, parallax, a
@@ -62,7 +62,7 @@ react-icons · Canvas particle systems. **No external UI component libraries.**
 ## 📁 Folder structure
 
 ```
-reemal-birthday/
+reemal-YOU speacial/
 ├── public/
 │   └── music/            # drop soft-piano.mp3 here
 ├── src/
